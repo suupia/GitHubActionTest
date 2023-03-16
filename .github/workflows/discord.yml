@@ -26,4 +26,4 @@ jobs:
         webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
         color: "#48f442"
         username: "GitHub Bot"
-        args: "The ${{ github.event_name }} event was triggered by ${{ steps.commit_message_and_pusher.outputs.pusher }} with the message: ${{ steps.commit_message_and_pusher.outputs.commit_message }}"
+        args: "The ${{ github.event_name }} event was triggered by @${{ github.actor }} with the message: ${{ steps.commit_message_and_pusher.outputs.commit_message }}"
