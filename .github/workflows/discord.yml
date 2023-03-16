@@ -14,10 +14,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: Get commit message
-      id: commit_message
-      run: |
-        echo "::set-output name=commit_message::$(git log -1 --pretty=format:'%s')"
     - name: Discord Message Notify
       uses: appleboy/discord-action@0.0.3
       with:
@@ -25,4 +21,4 @@ jobs:
         webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
         color: "#48f442"
         username: "GitHub Bot"
-        args: "The ${{ github.event_name }} event was triggered by @${{ github.actor }} with the message: ${{ steps.commit_message.outputs.commit_message }}"
+        args: "The ${{ github.event_name }} event was triggered by @${{ github.actor }} with the message: ${{ github.job }}"
