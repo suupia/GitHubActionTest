@@ -1,0 +1,29 @@
+name: Discord Message Notify
+
+on:
+  push:
+    branches: 
+    - main
+    - dev
+  pull_request:
+    branches:
+    - main
+    - dev
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Get commit message and pusher
+      id: commit_message_and_pusher
+      run: |
+        echo "::set-output name=commit_message::$(git log -1 --pretty=format:'%s')"
+        echo "::set-output name=pusher::$(git log -1 --pretty=format:'%an')"
+    - name: Discord Message Notify
+      uses: appleboy/discord-action@0.0.3
+      with:
+        webhook_id: ${{ secrets.WEBHOOK_ID }}
+        webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
+        color: "#48f442"
+        username: "GitHub Bot"
+        args: "The ${{ github.event_name }} event was triggered by ${{ steps.commit_message_and_pusher.outputs.pusher }} with the message: ${{ steps.commit_message_and_pusher.outputs.commit_message }}"
