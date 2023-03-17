@@ -22,7 +22,7 @@ jobs:
     - name: Get commit message
       id: commit_message
       run: |
-        echo "$(git log -1 --pretty=format:'%s')" >> $GITHUB_OUTPUT
+        echo "$(git log --graph --decorate --pretty=oneline -3 --all --abbrev-commit)" >> $GITHUB_OUTPUT
     - name: Notify discord
       uses: appleboy/discord-action@0.0.3
       with:
