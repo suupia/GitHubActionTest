@@ -11,20 +11,22 @@ on:
     - dev
 
 jobs:
-  build:
+  notify_discord_of_push:
+    name: Get Commit Message
     runs-on: ubuntu-latest
-    env: 
-      commit_message: CommitMessage
     steps:
+    - name: Check out repo's head branch
+      uses: actions/checkout@v2.4.0
+      with:
+          ref: ${{ github.head_ref }} #For pull_request events, GITHUB_REF contains the merge branch (refs/pull/:prNumber/merge).
     - name: Get commit message
-      id: commit_message
       run: |
-        Commit_Message: "::set-output name=commit_message::$(git log -1 --pretty=format:'%s')"
-    - name: Discord Message Notify
+        echo "Commit_Message=$(git log --graph --decorate --pretty=oneline -3 --all --abbrev-commit)" >> $GITHUB_ENV
+    - name: Notify discord
       uses: appleboy/discord-action@0.0.3
       with:
         webhook_id: ${{ secrets.WEBHOOK_ID }}
         webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
         color: "#48f442"
         username: "GitHub Bot"
-        args: "The ${{ github.event_name }} event was triggered by @${{ github.actor }} with the message: ${{ env.commit_message }}"
+        args: "The ${{ github.event_name }} event was triggered by @${{ github.actor }} with the message: ${{ env.Commit_Message }}"
