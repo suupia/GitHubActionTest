@@ -16,6 +16,9 @@ jobs:
     env: 
       commit_message: CommitMessage
     steps:
+    - uses: actions/checkout@v2.4.0
+      with:
+          ref: ${{ github.head_ref }}
     - name: Get commit message
       id: commit_message
       run: |
