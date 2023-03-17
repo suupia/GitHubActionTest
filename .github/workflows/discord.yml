@@ -19,7 +19,7 @@ jobs:
     - name: Get commit message
       id: commit_message
       run: |
-        Commit_Message: "::set-output name=commit_message::$(git log -1 --pretty=format:'%s')"
+        commit_message: "::set-output name=commit_message::$(git log -1 --pretty=format:'%s')"
     - name: Discord Message Notify
       uses: appleboy/discord-action@0.0.3
       with:
