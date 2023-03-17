@@ -23,7 +23,7 @@ jobs:
           ref: ${{ github.head_ref }} #For pull_request events, GITHUB_REF contains the merge branch (refs/pull/:prNumber/merge).
     - name: Get commit message
       run: |
-        LOG=Taro
+        LOG="$(git log --graph --decorate --pretty=oneline -3 --all --abbrev-commit)" 
         echo LOG >> $Commit_Message
     - name: Notify discord
       uses: appleboy/discord-action@0.0.3
