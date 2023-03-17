@@ -23,7 +23,7 @@ jobs:
           ref: ${{ github.head_ref }} #For pull_request events, GITHUB_REF contains the merge branch (refs/pull/:prNumber/merge).
     - name: Get commit message
       run: |
-        echo "::set-env name=Commit_Message::$(git log --graph --decorate --pretty=oneline -3 --all --abbrev-commit)"
+        echo "cm=yellow" >> $Commit_Message
     - name: Notify discord
       uses: appleboy/discord-action@0.0.3
       with:
@@ -31,4 +31,4 @@ jobs:
         webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
         color: "#48f442"
         username: "GitHub Bot"
-        args: "The ${{ github.event_name }} event was triggered by @${{ github.actor }} with the message: ${{ env.Commit_Message }}"
+        args: "The ${{ github.event_name }} event was triggered by @${{ github.actor }} with the message: ${{ env.cm }}"
