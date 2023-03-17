@@ -24,7 +24,7 @@ jobs:
     - name: Get commit message
       run: |
         LOG="$(git log --graph --decorate --pretty=oneline -3 --all --abbrev-commit)" 
-        echo LOG >> $Commit_Message
+        export Commit_Message="$(git log --graph --decorate --pretty=oneline -3 --all --abbrev-commit)" 
     - name: Notify discord
       uses: appleboy/discord-action@0.0.3
       with:
